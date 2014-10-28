@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+ <html lang="en">
+   <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
+        <title>Intents</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+        <link href="css/jquery-ui.css" rel="stylesheet">
+        <script src="js/ui.js"></script>
+        <script src="js/jquery-1.9.1.js"></script>
+        <script src="js/jquery-ui.js"></script>
+        <style>
+         body {
+           margin-left : 200px;
+         }
+         #app-body {
+           padding : 20px;
+           border : solid 1px lightgray;
+         }
+            
+        .btn-primary {
+   				 background-color:#51CBEE;
+   				 background-image:none;
+   				 color:#FFFFFF;
+   				 text-shadow:rgba(0, 0, 0, 0.247059) 0 -1px 0;
+			}
+		 .btn-primary :inactive {
+  			  background-color:#51CBEE;
+  			  background-image:none;
+   			 background-repeat:no-repeat;
+   			 color:#FFFFFF;
+   			 text-shadow:rgba(0, 0, 0, 0.247059) 0 -1px 0;
+			}
+		.btn-primary:hover {
+   			 background-color:#B8ED01;
+   			 background-image:none;
+    		 background-repeat:no-repeat;
+    		 color:#FFDE97;
+    	     text-shadow:rgba(0, 0, 0, 0.247059) 0 -1px 0;
+		}
+       
+       #menu-bar {
+         background : lightgray;
+       }
+       
+       .link {
+         padding : 10px;
+         background: green;
+       }
+       
+       .link:hover {
+         background: yellow;
+         text-decoration: none;
+       }
+          
+        </style>
+         
+    </head>
+    <body>
+        <div id="app-body">
+        
+          <form enctype="multipart/form-data" action="/quest/upload" method="post">
+            <br>
+            
+            <input type="file" name="file" multiple class="btn btn-primary"/>
+            <br><br>
+            <input type="submit" value="Upload Game Words" class="btn btn-primary">
+         </form>
+         
+        </div> 
+
+    </body>
+    </html>

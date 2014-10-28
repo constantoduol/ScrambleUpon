@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+ <html lang="en">
+   <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
+        <title>Scramble Upon</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta name="description" content="scramble,scrambled words,games,game,play,wordgames,unscramble"/>
+        <meta name="author" content="constant">
+        <link rel="canonical" href="http://scrambleupon.appspot.com" />
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Orbitron "   rel="stylesheet" type="text/css">
+        <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+        <link href="css/jquery-ui.css" rel="stylesheet">
+        <link href="css/anim.css" rel="stylesheet">
+        <link rel="shortcut icon" href="favicon.png" type="image/x-icon" />
+        <script src="js/ui.js"></script>
+        <script src="js/game.js"></script>
+        <script src="js/jquery-1.9.1.js"></script>
+        <script src="js/jquery-ui.js"></script>
+        <script src="js/bootstrap-modal.js"></script>
+        <script src="js/jquery.ui.touch-punch.min.js"></script>
+        <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+        <style>
+         #unscrambled-word {
+            font-family : Orbitron ,san-serif;
+          }
+          
+         #menu {
+           background : #eee;
+           padding :10px;
+         }
+         
+         #submit-scramble:hover {
+           background : rgb(244,180,0);
+         }
+         
+         #submit-scramble {
+           background : rgb(15,157,88);
+         }
+         
+         a{
+           padding : 20px;
+           
+         }
+         
+         a:hover {
+           text-decoration : none;
+           background : rgb(244,180,0);
+           color : black;
+         }
+         
+         .btn-primary {
+           background : rgb(15,157,88)
+         }
+         
+         .btn-primary:hover {
+            background : rgb(244,180,0);
+         }
+         
+         .modal {
+           top : -10%;
+           left : 0%;
+           color : black;
+           font-size : 14px;
+           font-family : calibri, sans-seriff;
+           text-transform : none;
+         }
+         
+         .ui-slider .ui-slider-handle {
+           height : 0px;
+           width : 0px;
+           background: rgb(15,157,88);
+           padding : 10px;
+         }
+         
+        
+         .ui-slider-range {
+           background : rgb(244,180,0);
+         }
+         
+         .ui-progressbar-value {
+            background : rgb(244,180,0);
+         }
+         
+         body {
+           font-family : Orbitron ,sans-serif;
+           color : #08c;
+           background: url(img/letter_back.jpg);
+           text-transform : uppercase;
+           font-weight : bold;
+           overflow : hidden;
+         }
+        
+         #form_area {
+           text-align : center;
+         }  
+         
+         .btn{
+           font-family : Orbitron ,sans-serif;
+           text-transform : uppercase;
+           font-weight : bold;
+         }
+         
+         #unscrambled-word{
+           font-family : Orbitron ,sans-serif;
+           text-transform : uppercase;
+           font-weight : bold;
+         }
+         
+         #scramble_list{
+           font-family : Orbitron ,sans-serif;
+           text-transform : uppercase;
+           font-weight : bold;
+         }
+        
+     .animated {
+       -webkit-animation: blurFadeIn 0.5s backwards;
+	   -moz-animation: blurFadeIn 0.5s backwards;
+	   -ms-animation: blurFadeIn 0.5s backwards;
+	   animation: blurFadeIn 0.5s backwards;
+      }
+    
+    .error{
+        color : red;
+       -webkit-animation: bounce 0.5s backwards;
+	   -moz-animation: bounce 0.5s backwards;
+	   -ms-animation: bounce 0.5s backwards;
+	    animation: bounce 0.5s backwards;
+     }
+     
+      .scoreAnim{
+        color : rgb(255,180,0);
+        font-size : 48px;
+        margin-top : 20px;
+       -webkit-animation: bounce 1s backwards;
+	   -moz-animation: bounce 1s backwards;
+	   -ms-animation: bounce 1s backwards;
+	    animation: bounce 1s backwards;
+     }
+        
+          
+        </style>
+        </head>
+         <body>
+            <div id="fb-root"></div>
+				<script>
+					(function(d, s, id) {
+ 						 var js, fjs = d.getElementsByTagName(s)[0];
+ 	 					 if (d.getElementById(id)) return;
+ 	 						js = d.createElement(s); js.id = id;
+  	 						js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=229019407236786";
+  	 						fjs.parentNode.insertBefore(js, fjs);
+  						}
+ 					(document, 'script', 'facebook-jssdk'));
+ 			  </script>
+         <div id="menu">
+           <img src="img/sc_logo.png" id="logo">
+           <a href="#about" onclick="showAbout()">About</a>
+           <a href="#leaderboard" onclick="showLeaderBoard()">LeaderBoard</a>
+           <a href="#settings" onclick="showSettings()">Settings</a>
+           <a href="#help" onclick="showHelp()">Help</a>
+           <div id="social" style="float : right">
+             <table>
+              <tr>
+               <td>
+               <div class="fb-like" data-href="https://scrambleupon.appspot.com" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false" style="margin-right : 10px"></div>
+               </td>
+               <td>
+               <g:plusone></g:plusone>
+               </td>
+               <td>
+               <div class="fb-share-button" data-href="https://scrambleupon.appspot.com" data-type="button_count"></div>
+               </td>
+               </tr>
+             </table>
+           </div>
+         </div>
+         
+         
+         <div id="scores" style="float : right">
+            <img src="img/score.png" id="score">
+            <span id="score_board" style="background : #eee; color : #08c">000</span>
+            <div id="score_animation"></div>
+         </div>
+         
+         <form id="form_area" onsubmit="evaluateEntry(); return false;">
+           <div id="progress_monitor">
+              <select id="scramble_list">
+              </select>
+              <input type="button" value="Start" class="btn" id="start-scramble" onclick="startProgress()"/>
+           </div>
+           <label id="scramble_area"></label>
+           
+           <input type="text" id="unscrambled-word" />
+           <input type="submit" value="Submit" id="submit-scramble"  class="btn"/>
+         </form>
+         
+         
+         
+           <div class="modal hide" id="alert-window"  style="height :auto">
+              <div class="modal-header">
+                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h3 id="modal-title">
+					</h3>
+                    </div>
+                    <div class="modal-body">
+                    <p id="modal-content">
+				 
+				   </p>
+                  </div>
+                 <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+               <a href="#" class="btn btn-primary" data-dismiss="modal">OK</a>
+             </div>
+           </div>
+           <script type="text/javascript">
+           
+           
+              function showAbout(){
+            	 game.alert("About","Scramble Upon brought to you by <a href='mailto:questlab.ke@gmail.com' style='color:black'>QuestLab</a> 2013");
+              }
+              
+              function evaluateEntry(){
+            	 var area=dom.el("unscrambled-word");
+            	 var entry=area.value;
+            	 game.validate(entry);
+            	 area.value="";
+            	 area.focus(); 
+              }
+              
+              
+              function showStart(){
+            	 var progArea=dom.el("progress_monitor");
+            	 game.clearTimer();
+             	 progArea.innerHTML="";
+             	 var select=dom.newEl("select");
+             	 select.attr("id","scramble_list");
+             	 progArea.add(select);
+             	 var input=dom.newEl("input");
+             	 input.attr("type","button");
+             	 input.attr("value","Start");
+             	 input.attr("class","btn");
+             	 input.attr("id","start-scramble");
+             	 input.attr("onclick","startProgress()");
+             	 progArea.add(input);
+             	 dom.el("scramble_area").innerHTML="";
+             	 game.resize();
+             	 game.categories();
+             	 game.running=false;
+             	 game.timeRemaining=game.timeLimit;
+              }
+              
+              function startProgress(){
+            	 var progArea=dom.el("progress_monitor");
+            	 var category=dom.el("scramble_list").value;
+            	 game.start(category);
+            	 progArea.innerHTML="";
+            	 var limit=game.timeLimit;  
+            	 limit="<a href=#restart title='Restart the game' onclick='showStart()' id='start_href'>00:"+limit+"</a>";
+            	 var label=dom.newEl("label");	
+            	 label.attr("id","timer");
+            	 label.innerHTML=limit;
+            	 progArea.add(label);
+            	 game.resizables.push(timerRes);
+            	 game.resize();
+            	 dom.el("unscrambled-word").focus();
+              }
+              
+              function showHelp(){
+            	 var html="<h3>STARTING</h3>"+
+            	          "<p> You are supposed to unscramble 20 words in the shortest time possible.To start,"+
+            	          " select a category and click on start, type the"+ 
+            	          " unscrambled version of the scrambled word and press enter. Remember,"+
+            	          " the faster you type, the higher your score. To stop click on the timer. Make sure you are logged in"+
+            	          " to your gmail account to appear on the leaderboard</p>"+
+            	          "<h3>AUTHENTICATION</h3>"+
+            	          "<p>Make sure you are logged in to your google account to keep track of your scores</p>"+
+            	          "<h3>HINTS</h3>"+
+            	          "<p>To get a hint, click on the scrambled word and it will be unscrambled, however"+
+            	          " you will lose that score</p>"+
+            	          "<h3>SCORE</h3>"+
+            	          "The score varies exponentially, the faster you answer the higher your score. Higher difficulty levels"+
+            	          " have a higher maximum score but a lower time limit"+
+            	          "<h3>SETTINGS</h3>"+
+            	          "<p>There are five difficulty levels for playing the game spanning from ridiculously easy,easy"+
+            	          " ,normal,hard,to ridculously hard. Click on settings to change the difficulty level"
+            	          dom.el("modal-title").innerHTML="HELP";
+            	          var content=dom.el("modal-content");
+             	          content.innerHTML="";
+             	          content.innerHTML=html;
+             	         $("#alert-window").modal();
+              }
+              
+              function showSettings(){
+             	 dom.el("modal-title").innerHTML="Settings";
+             	 var content=dom.el("modal-content");
+             	 content.innerHTML="";
+             	 var table=dom.newEl("table");
+             	 table.attr("class","table");
+             	 var tr=dom.newEl("tr");
+             	 var th1=dom.newEl("th");
+             	 var th2=dom.newEl("th");
+             	 th1.innerHTML="Setting";
+             	 th2.innerHTML="Value";
+             	 tr.add(th1);
+             	 tr.add(th2);
+             	 table.add(tr);
+             	 
+             	 
+             	 var tr2=dom.newEl("tr");
+             	 var td3=dom.newEl("td");
+             	 var td4=dom.newEl("td");
+             	 td3.innerHTML="Difficulty";
+             	 td4.innerHTML="<span id='diff_value'></span>";
+             	 tr2.add(td3);
+             	 tr2.add(td4);
+             	 table.add(tr2);
+             	 
+             	 var tr3=dom.newEl("tr");
+             	 var td5=dom.newEl("td");
+             	 var td6=dom.newEl("td");
+             	 td5.innerHTML="Time Limit";
+             	 td6.innerHTML="<span id='time_value'></span>";
+             	 tr3.add(td5);
+             	 tr3.add(td6);
+             	 table.add(tr3);
+             	 
+             	 var tr4=dom.newEl("tr");
+             	 var td7=dom.newEl("td");
+             	 var td8=dom.newEl("td");
+             	 td7.innerHTML="Max score per answer";
+             	 td8.innerHTML="<span id='score_value'></span>";
+             	 tr4.add(td7);
+             	 tr4.add(td8);
+             	 table.add(tr4); 
+             	 
+             	 var div=dom.newEl("div");
+             	 div.attr("style","height : 10px; margin-top : 10px");
+             	 div.attr("id","slider");
+             	 content.add(table);
+             	 content.add(div);
+             	 renderSlide(game.difficulty);
+             	 $(function() {
+                 		$( "#slider" ).slider({
+                 			range: "min",
+                 			value: game.difficulty,
+                 			min: 0,
+                 			max: 100,
+                 			slide: function( event, ui ) {
+                 			   renderSlide(ui.value);
+                 			}
+                 		});
+                 	});
+             	 $("#alert-window").modal();
+             	 showStart();
+             	 
+              }
+              
+             function showShareBoard(){
+            	 
+             }
+              
+             function showLeaderBoard(){
+            	 dom.el("modal-title").innerHTML="Leader Board";
+              	 var content=dom.el("modal-content");
+              	 content.innerHTML="";
+              	 var json={
+   	       	         request_header : {
+   	       	             request_msg : "leader_board",
+   	       	           },
+   	       	        request_object : {
+   	       	         }
+   	       	     };
+   	       	    Ajax.run({
+   	       	        url : "/quest/scramble",
+   	       	        type : "post",
+   	       	        data : json,
+   	       	        error : function(err){ 
+   	       	          game.alert("Whoops","Something went wrong");  
+   	       	        },
+   	       	        success : function(json){
+   	       	           var data=json.data;
+   	       	           var table=dom.newEl("table");
+   	       	           table.attr("class","table");
+   	       	           var tr=dom.newEl("tr");
+   	       	           var th1=dom.newEl("th");
+   	       	     	   var th2=dom.newEl("th");
+   	       			   var th3=dom.newEl("th");
+   	       			   var th4=dom.newEl("th");
+   	       			   th1.innerHTML="Username";
+   	       			   th2.innerHTML="Score";
+   	       			   th3.innerHTML="Category";
+   	       			   th4.innerHTML="Date";
+   	       			   tr.add(th1);
+   	       			   tr.add(th2);
+   	       			   tr.add(th3);
+   	       		       tr.add(th4);
+   	       			   table.add(tr);
+   	       	           for(var x=0; x<data.length; x++){
+   	       	        	 var row=dom.newEl("tr");
+   	       	        	 var col1=dom.newEl("td");
+   	       	       		 var col2=dom.newEl("td");
+   	       	 			 var col3=dom.newEl("td");
+   	       	 		     var col4=dom.newEl("td");
+   	       	 			 col1.innerHTML=data[x].username;
+   	       	 			 col2.innerHTML=data[x].score;
+   	       	 		     col3.innerHTML=data[x].category;
+   	       	 			 col4.innerHTML=new Date(data[x].last_played).toDateString();
+   	       	 			 row.add(col1);
+   	       	 			 row.add(col2);
+   	       	 			 row.add(col3);
+   	       	 		     row.add(col4);
+   	       	 			 table.add(row);
+   	       	           }
+   	       	           dom.el("modal-content").add(table);
+   	       	           $("#alert-window").modal();
+   	       	        } 
+   	       	     });
+              }
+              
+              function renderSlide(val){
+    			   game.difficulty=val;
+    			   var diff=dom.el("diff_value");
+    			   var score=dom.el("score_value");
+    			   var time=dom.el("time_value");
+    			   var diffValue;
+    			   if(val<20){
+    				  diffValue="RIDICULOUSLY EASY";
+    				  game.score=200;
+    				  game.timeLimit=60;
+    				  game.timeRemaining=60;
+    			   }
+    			   else if(val<40){
+    				  diffValue="EASY"; 
+    				  game.score=300;
+    				  game.timeLimit=45;
+    				  game.timeRemaining=45;
+    			   }
+    			  else if(val<60){
+    				 diffValue="NORMAL";  
+    				 game.score=400;
+    				 game.timeLimit=30;
+    				 game.timeRemaining=30;
+   			      }
+    			 else if(val<80){
+    				diffValue="HARD";
+    				game.score=800;
+    				game.timeLimit=10;
+    				game.timeRemaining=10;
+  			      }
+    			 else if(val<=100){
+    				diffValue="RIDICULOUSLY HARD";  
+    				game.timeLimit=5;
+    				game.score=1200;
+    				game.timeRemaining=5;
+ 			      }
+    			  diff.innerHTML=diffValue;  
+    			  score.innerHTML=game.score+" Points";
+    			  time.innerHTML=game.timeLimit+" Secs";
+              }
+              
+              var unscrambledWordRes={
+            		  id : "unscrambled-word", 
+            		  width : 0.6, 
+            		  height : 0.06,
+            		  style : {
+            			  fontSize : {
+            				  factor : 0.05,
+            				  along : "height"
+            			  }
+            			} 
+                     };
+              var menuRes={
+            		  id : "menu", 
+            		  width : 0.98,  
+            		  style : {
+            			  fontSize : {
+            				  factor : 0.02,
+            				  along : "height"
+            			  }
+            			} 
+                     };
+              var submitRes={
+            		  id : "submit-scramble", 
+            		  width : 0.5, 
+            		  height : 0.07,
+            		  style : {
+            			  fontSize : {
+            				  factor : 0.05,
+            				  along : "height"
+            			  },
+          			     marginLeft : {
+							 factor : 0.05,
+				 			 along : "width"
+	 					  }
+            			} 
+                     };
+              var progressRes={
+            		  id : "progressbar", 
+            		  width : 0.25, 
+            		  height : 0.01,
+            		  style : {
+            			  marginLeft : {
+		 					 factor : 0.37,
+		 					 along : "width"
+	 			 		 },
+	 			 		  marginBottom : {
+	 	       				  factor : 0.10,
+	 	       				  along : "height"
+	 	       			   }
+            		  }
+                     };
+              
+              var modalRes={
+            		  id : "alert-window",  
+            		  width : 0.5,
+            		  style : {
+              			 marginTop : {
+				 			 factor : 0.25,
+				 			 along : "height"
+			 			  },
+            		  	marginLeft : {
+		 					 factor : 0.25,
+		 					 along : "width"
+	 			 		 }
+            			} 
+                     };
+               var logoRes={
+            		  id : "logo",  
+            		  width : 0.15,
+            		  height : 0.06,
+                     };
+               var scoreRes={
+             		  id : "score",  
+             		  width : 0.06,
+             		  height : 0.05,
+                   };
+               var scoreBoardRes={
+              		  id : "score_board",  
+              		  style : {
+              			fontSize : {
+            				  factor : 0.05,
+            				  along : "height"
+            			 },
+            			marginRight : {
+           				  factor : 0.0035,
+           				  along : "width"
+           			    },
+           			    padding : {
+           			      factor : 0.005,
+          				  along : "width"	
+           			    }
+              		  }
+                   };
+      
+              var formRes ={
+                 id : "form_area",
+                 style : {
+       			  fontSize : {
+    				  factor : 0.05,
+    				  along : "height"
+    			  },
+    			  marginTop : {
+       				  factor : 0.2,
+       				  along : "height"
+       			   }
+                 }
+              }
+
+            var scrambleAreaRes ={
+                 id : "scramble_area",
+                 style : { 
+       			   fontSize : {
+    				  factor : 0.1,
+    				  along : "height"
+    			  },
+    			  marginBottom : {
+       				  factor : 0.08,
+       				  along : "height"
+       			   }
+                 }
+              }
+              var timerRes ={
+                      id : "timer",
+                      style : { 
+            			fontSize : {
+         				  factor : 0.1,
+         				  along : "height"
+         			  },
+         			   marginBottom : {
+            				  factor : 0.1,
+            				  along : "height"
+            			   }
+                      }
+                   }
+              var startRes={
+            		  id : "start-scramble", 
+            		  width : 0.5, 
+            		  height : 0.07,
+            		  style : {
+            			  fontSize : {
+            				  factor : 0.05,
+            				  along : "height"
+            			  },
+          			     marginLeft : {
+							 factor : 0.05,
+				 			 along : "width"
+	 					  },
+	 					 marginBottom : {
+							 factor : 0.05,
+				 			 along : "height"
+	 					  }
+            			} 
+                     };
+              var scrambleListRes={
+            		  id : "scramble_list", 
+            		  width : 0.5, 
+            		  height : 0.07,
+            		  style : {
+            			  fontSize : {
+            				  factor : 0.05,
+            				  along : "height"
+            			  },
+          			     marginLeft : {
+							 factor : 0.05,
+				 			 along : "width"
+	 					  },
+	 					 marginBottom : {
+							 factor : 0.05,
+				 			 along : "height"
+	 					  }
+            			} 
+                     };
+              $("#score_animation" ).draggable();
+              game.resizables.push(formRes);
+              game.resizables.push(unscrambledWordRes);
+              game.resizables.push(menuRes);
+              game.resizables.push(submitRes);
+              game.resizables.push(modalRes);
+              game.resizables.push(logoRes);
+              game.resizables.push(scoreRes);
+              game.resizables.push(scoreBoardRes);
+              game.resizables.push(scrambleAreaRes);
+              game.resizables.push(startRes);
+              game.resizables.push(scrambleListRes);
+              game.init();
+              
+            
+              
+           </script>
+        </body>
+  </html>
